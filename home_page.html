@@ -147,6 +147,7 @@
 
                     var query = fromCoord.join(',') + ':' + toCoord.join(',');
 
+                    // car request
                     var carRequestUrl = carRoutingRequestUrl.replace('{query}', query);
 
                     processRequest(carRequestUrl).then(r => {
@@ -154,6 +155,7 @@
                         document.getElementById('output').innerHTML += 'Car Distance: ' + Math.round(r.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
                     });
 
+                    //truck request
                     var truckRequestUrl = truckRoutingRequestUrl.replace('{query}', query);
 
                     var loadType = getSelectValues('vehicleLoadType');
@@ -291,10 +293,10 @@
 <body onload="getMap()"> 
     <div class="sidePanel">
         <fieldset style="width:300px;margin-bottom:10px;">
-            <legend>Car vs Truck Route</legend>
-            This sample compares the route a truck has to take
-            <span style="color:green">(green)</span> to the route a car can take
-            <span style="color: #e50000">(red)</span>.
+            <legend>Lorry Route</legend>
+            This sample creates a lorry route between the destinations using Azure Map API
+            <!--<span style="color:green">(green)</span> to the route a car can take
+            <span style="color: #e50000">(red)</span>.-->
         </fieldset>
 
         <table>

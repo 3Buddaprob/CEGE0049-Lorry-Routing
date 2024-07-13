@@ -58,15 +58,15 @@
                 // Add authentication details for connecting to Azure Maps.
                 authOptions: {
                     // Use Microsoft Entra ID authentication.
-                    authType: 'anonymous',
-                    clientId: azureMapsClientId,
-                    getToken: getToken
+                    //authType: 'anonymous',
+                    //clientId: azureMapsClientId,
+                    //getToken: getToken
 
                     // Alternatively, use an Azure Maps key.
                     // Get an Azure Maps key at https://azure.com/maps.
                     // NOTE: The primary key should be used as the key.
-                    //authType: 'subscriptionKey',
-                    //subscriptionKey: '[YOUR_AZURE_MAPS_KEY]'
+                    authType: 'subscriptionKey',
+                    subscriptionKey: 'C0adSsoOzlBHoC89T1dT8IvtTxehreCrZIWSeiis3NjnX6Sx3xHXJQQJ99AGAC5RqLJQdnNOAAAgAZMPsVc3'
                 }
             });
 
@@ -147,6 +147,7 @@
 
                     var query = fromCoord.join(',') + ':' + toCoord.join(',');
 
+                    // car request
                     var carRequestUrl = carRoutingRequestUrl.replace('{query}', query);
 
                     processRequest(carRequestUrl).then(r => {
@@ -154,6 +155,7 @@
                         document.getElementById('output').innerHTML += 'Car Distance: ' + Math.round(r.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
                     });
 
+                    //truck request
                     var truckRequestUrl = truckRoutingRequestUrl.replace('{query}', query);
 
                     var loadType = getSelectValues('vehicleLoadType');
@@ -288,13 +290,13 @@
         }
     </style>
 </head>
-<body onload="getMap()">
+<body onload="getMap()"> 
     <div class="sidePanel">
         <fieldset style="width:300px;margin-bottom:10px;">
-            <legend>Car vs Truck Route</legend>
-            This sample compares the route a truck has to take
-            <span style="color:green">(green)</span> to the route a car can take
-            <span style="color: #e50000">(red)</span>.
+            <legend>Lorry Route</legend>
+            This sample creates a lorry route between the destinations using Azure Map API
+            <!--<span style="color:green">(green)</span> to the route a car can take
+            <span style="color: #e50000">(red)</span>.-->
         </fieldset>
 
         <table>

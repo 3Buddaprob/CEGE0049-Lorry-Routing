@@ -163,7 +163,16 @@
                         truckRequestUrl += '&vehicleLoadType=' + loadType;
                     }
 
-                    truckRequestUrl = setValueOptions(truckRequestUrl, ['vehicleWeight', 'vehicleWidth', 'vehicleHeight', 'vehicleLength']);
+                    truckRequestUrl = setValueOptions(truckRequestUrl, ['vehicleWidth', 'vehicleHeight', 'vehicleLength']);
+                    console.log(document.getElementById('vehicleWeight').value);
+
+                    //HC: convert vehicle weight to kg by multiplying by 1000
+                    var vehicleWeight = document.getElementById('vehicleWeight').value;
+                    if (vehicleWeight && vehicleWeight !== '') {
+                        vehicleWeight *= 1000;
+                        truckRequestUrl += '&vehicleWeight=' + vehicleWeight;
+                        console.log(vehicleWeight);
+                    }
 
                     processRequest(truckRequestUrl).then(r => {
                         addRouteToMap(r.routes[0], 'green');
@@ -253,6 +262,12 @@
             document.getElementById('vehicleLength').value = scenario.length;
             document.getElementById('vehicleWeight').value = scenario.weight;
 
+            //HC: convert vehicle weight to kg by multiplying by 1000
+            console.log('vehicle weight: ', scenario.weight);
+            var vehicleWeightInKg = scenario.weight ? scenario.weight * 1000 : '';
+            console.log('Vehicle Weight (kg):', vehicleWeightInKg);
+            document.getElementById('vehicleWeight').value=vehicleWeightInKg;
+
             var vehicleLoadTypeSelect = document.getElementById('vehicleLoadType');
 
             for (var i = 0; i < vehicleLoadTypeSelect.length; i++) {
@@ -326,7 +341,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Vehicle Weight (kg):</td>
+                            <td>Vehicle Weight (Tonne):</td>
                             <td>
                                 <input type="number" id="vehicleWeight" title="Vehicle Weight (kg)" />
                             </td>

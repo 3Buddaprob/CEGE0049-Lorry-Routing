@@ -163,16 +163,22 @@
                         truckRequestUrl += '&vehicleLoadType=' + loadType;
                     }
 
-                    truckRequestUrl = setValueOptions(truckRequestUrl, ['vehicleWidth', 'vehicleHeight', 'vehicleLength']);
-                    console.log(document.getElementById('vehicleWeight').value);
-
-                    //HC: convert vehicle weight to kg by multiplying by 1000
+                    ////HC: convert vehicle weight to kg by multiplying by 1000
                     var vehicleWeight = document.getElementById('vehicleWeight').value;
                     if (vehicleWeight && vehicleWeight !== '') {
                         vehicleWeight *= 1000;
-                        truckRequestUrl += '&vehicleWeight=' + vehicleWeight;
+                        //truckRequestUrl += '&vehicleWeight=' + vehicleWeight;
+                        truckRequestUrl = truckRequestUrl.replace('{vehicleWeight}', vehicleWeight);
                         console.log(vehicleWeight);
+                    } else {
+                        truckRequestUrl= truckRequestUrl.replace('&vehicleWeight={vehicleWeight}', '');
                     }
+
+                    truckRequestUrl = setValueOptions(truckRequestUrl, ['vehicleWidth', 'vehicleHeight', 'vehicleLength']);
+                    console.log(document.getElementById('vehicleWeight').value);
+                    console.log(truckRequestUrl);
+
+
 
                     processRequest(truckRequestUrl).then(r => {
                         addRouteToMap(r.routes[0], 'green');
@@ -262,11 +268,11 @@
             document.getElementById('vehicleLength').value = scenario.length;
             document.getElementById('vehicleWeight').value = scenario.weight;
 
-            //HC: convert vehicle weight to kg by multiplying by 1000
-            console.log('vehicle weight: ', scenario.weight);
-            var vehicleWeightInKg = scenario.weight ? scenario.weight * 1000 : '';
-            console.log('Vehicle Weight (kg):', vehicleWeightInKg);
-            document.getElementById('vehicleWeight').value=vehicleWeightInKg;
+            ////HC: convert vehicle weight to kg by multiplying by 1000
+            //console.log('vehicle weight: ', scenario.weight);
+            //var vehicleWeightInKg = scenario.weight ? scenario.weight * 1000 : '';
+            //console.log('Vehicle Weight (kg):', vehicleWeightInKg);
+            //document.getElementById('vehicleWeight').value=vehicleWeightInKg;
 
             var vehicleLoadTypeSelect = document.getElementById('vehicleLoadType');
 
@@ -315,8 +321,8 @@
         </fieldset>
 
         <table>
-            <tr><td>From:</td><td><input type="text" id="fromTbx" title="From" /></td></tr>
-            <tr><td>To:</td><td><input type="text" id="toTbx" title="To" /></td></tr>
+            <tr><td>From:</td><td><input type="text" id="fromTbx" title="From" value="UCL" /></td></tr>
+            <tr><td>To:</td><td><input type="text" id="toTbx" title="To" value="Russell Square" /></td></tr>
 
             <tr>
                 <td colspan="2">

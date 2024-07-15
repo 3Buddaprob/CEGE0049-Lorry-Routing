@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+.vs/slnx.sqlite
+.vs/CEGE0049 Lorry Routing/FileContentIndex/f350cc92-6d4d-488a-835a-1a6d1f28cd3b.vsidx
+*.sqlite

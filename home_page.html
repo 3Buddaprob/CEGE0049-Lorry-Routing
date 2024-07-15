@@ -1,7 +1,7 @@
 ﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Car vs Truck Route - Azure Maps Web SDK Samples</title>
+    <title>Demo: Vehicle Routing</title>
 
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -31,7 +31,9 @@
         var scenarios = [
             { from: '47.632241,-122.299189', to: '47.634676,-122.300302', height: '5', width: '3', length: '', weight: '', load: [], description: 'Low bridge', streetsideLink: 'https://binged.it/2oT6d4V' },
             { from: '47.586514,-122.245874', to: '47.584868,-122.243094', height: '', width: '', length: '30', weight: '', load: [], description: 'Tight turn', streetsideLink: 'https://binged.it/2v2gal8' },
-            { from: '40.429993,-79.998690', to: '40.414211,-80.009550', height: '', width: '', length: '', weight: '', load: ['USHazmatClass3'], description: 'Flammable load', streetsideLink: 'https://binged.it/2hd6P3s' }
+            { from: '40.429993,-79.998690', to: '40.414211,-80.009550', height: '', width: '', length: '', weight: '', load: ['USHazmatClass3'], description: 'Flammable load', streetsideLink: 'https://binged.it/2hd6P3s' },
+            //HC: S1 Scenario
+            { from: 'NW1 8NS', to: '18 Lodge Rd, London NW8 7JT', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 1', streetsideLink: 'https://binged.it/2hd6P3s' },
         ];
 
         // Your Azure Maps client id for accessing your Azure Maps account.
@@ -170,8 +172,10 @@
                     var vehicleWeight = document.getElementById('vehicleWeight').value;
                     if (vehicleWeight && vehicleWeight !== '') {
                         vehicleWeight *= 1000;
-                        truckRequestUrl += '&vehicleWeight=' + vehicleWeight;
+                        truckRequestUrl = truckRequestUrl.replace('{vehicleWeight}', vehicleWeight);
                         console.log(vehicleWeight);
+                    } else {
+                        truckRequestUrl = truckRequestUrl.replace('{vehicleWeight}', '');
                     }
 
                     processRequest(truckRequestUrl).then(r => {
@@ -263,10 +267,10 @@
             document.getElementById('vehicleWeight').value = scenario.weight;
 
             //HC: convert vehicle weight to kg by multiplying by 1000
-            console.log('vehicle weight: ', scenario.weight);
-            var vehicleWeightInKg = scenario.weight ? scenario.weight * 1000 : '';
-            console.log('Vehicle Weight (kg):', vehicleWeightInKg);
-            document.getElementById('vehicleWeight').value=vehicleWeightInKg;
+            //console.log('vehicle weight: ', scenario.weight);
+            //var vehicleWeightInKg = scenario.weight ? scenario.weight * 1000 : '';
+            //console.log('Vehicle Weight (kg):', vehicleWeightInKg);
+            //document.getElementById('vehicleWeight').value=vehicleWeightInKg;
 
             var vehicleLoadTypeSelect = document.getElementById('vehicleLoadType');
 
@@ -315,8 +319,8 @@
         </fieldset>
 
         <table>
-            <tr><td>From:</td><td><input type="text" id="fromTbx" title="From" /></td></tr>
-            <tr><td>To:</td><td><input type="text" id="toTbx" title="To" /></td></tr>
+            <tr><td>From:</td><td><input type="text" id="fromTbx" title="From" value="NW1 8NS" /></td></tr>
+            <tr><td>To:</td><td><input type="text" id="toTbx" title="To" value="18 Lodge Rd, London NW8 7JT" /></td></tr>
 
             <tr>
                 <td colspan="2">

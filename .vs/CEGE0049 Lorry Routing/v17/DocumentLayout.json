@@ -3,6 +3,9 @@
   "WorkspaceRootPath": "C:\\Users\\Heidi\\OneDrive - University College London\\Desktop\\Masters Course\\CEGE0049 Research Project\\Technical\\GIS\\CEGE0049 Lorry Routing\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Heidi\\AppData\\Local\\Temp\\calculateDirections.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Heidi\\OneDrive - University College London\\Desktop\\Masters Course\\CEGE0049 Research Project\\Technical\\GIS\\CEGE0049 Lorry Routing\\home_page.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:home_page.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
@@ -39,12 +42,31 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "calculateDirections.js",
+              "DocumentMoniker": "C:\\Users\\Heidi\\AppData\\Local\\Temp\\calculateDirections.js",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\AppData\\Local\\Temp\\calculateDirections.js",
+              "ToolTip": "C:\\Users\\Heidi\\AppData\\Local\\Temp\\calculateDirections.js",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\AppData\\Local\\Temp\\calculateDirections.js",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAA/AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-07-17T01:58:05.198Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "home_page.html",
               "DocumentMoniker": "C:\\Users\\Heidi\\OneDrive - University College London\\Desktop\\Masters Course\\CEGE0049 Research Project\\Technical\\GIS\\CEGE0049 Lorry Routing\\home_page.html",
               "RelativeDocumentMoniker": "home_page.html",
               "ToolTip": "C:\\Users\\Heidi\\OneDrive - University College London\\Desktop\\Masters Course\\CEGE0049 Research Project\\Technical\\GIS\\CEGE0049 Lorry Routing\\home_page.html",
               "RelativeToolTip": "home_page.html",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAC0AAACQAAAA",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAUwBYAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2024-07-13T13:43:10.567Z",
               "EditorCaption": ""

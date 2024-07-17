@@ -70,14 +70,8 @@
 
                 // Add authentication details for connecting to Azure Maps.
                 authOptions: {
-                    // Use Microsoft Entra ID authentication.
-                    //authType: 'anonymous',
-                    //clientId: azureMapsClientId,
-                    //getToken: getToken
-
                     // Alternatively, use an Azure Maps key.
                     // Get an Azure Maps key at https://azure.com/maps.
-                    // NOTE: The primary key should be used as the key.
                     authType: 'subscriptionKey',
                     subscriptionKey: 'C0adSsoOzlBHoC89T1dT8IvtTxehreCrZIWSeiis3NjnX6Sx3xHXJQQJ99AGAC5RqLJQdnNOAAAgAZMPsVc3'
                 }
@@ -230,6 +224,7 @@
 
                 //Combine the route point data for each route leg together to form a single path.
                 routeCoordinates = routeCoordinates.concat(legCoordinates);
+                console.log(routeCoordinates);
             }
 
             //Create a LineString from the route path points and add it to the line layer.
@@ -384,7 +379,7 @@
                     </table>
                 </td>
             </tr>
-            <tr><td colspan="2"><b style="font-size:20px;">Scenarios:</bstyle="font-size:></td></tr>
+            <tr><td colspan="2"><b style="font-size:20px;">Scenarios:</b style="font-size:></td></tr>
             <tr><td colspan="2"><div id="scenarios"></div></td></tr>
             <tr><td colspan="2"><b>Average Daily Flow:</b></td></tr>
             <tr><td colspan="2"><div id="dailyFlow"></div></td></tr>

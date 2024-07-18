@@ -1,5 +1,9 @@
 ﻿// Description: This file contains the code to calculate directions between multiple locations using the Azure Maps Routing service.
-// The origins and destinations are hard coded with applications for Stage 1: Site set up and demolition only. 
+// The origins and destinations are hard coded with applications for Stage 1: Site set up and demolition only.
+
+var routeCoordinates1 = [];
+var routeCoordinates2 = [];
+var routeCoordinates3 = [];
 function calculateDirectionsScenario() {
      routePoints = []; //Clear the route points.
      document.getElementById('output').innerHTML = ''; //Clear the output div.
@@ -88,21 +92,72 @@ function calculateDirectionsScenario() {
                     }
 
                     processRequest(truckRequestUrl1).then(r => {
-                        addRouteToMap(r.routes[0], 'green');
+                        addRouteToMapScenario(r.routes[0], 'green',1);
+                        console.log('route 1: ',r.routes[0]);
                         document.getElementById('output').innerHTML += 'Truck Distance 1: ' + Math.round(r.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
                     });
+                    //console.log()
 
                     processRequest(truckRequestUrl2).then(r => {
-                        addRouteToMap(r.routes[0], 'green');
+                        addRouteToMapScenario(r.routes[0], 'green',2);
                         document.getElementById('output').innerHTML += 'Truck Distance 2: ' + Math.round(r.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
                     });
 
                     processRequest(truckRequestUrl3).then(r => {
-                        addRouteToMap(r.routes[0], 'green');
+                        addRouteToMapScenario(r.routes[0], 'green',3);
                         document.getElementById('output').innerHTML += 'Truck Distance 3: ' + Math.round(r.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
                     });
+
+                    //console.log('r1: ', routecoordinates1);
+                    //console.log('r2: ', routecoordinates2);
+                    //console.log('r3: ', routecoordinates3);
+
                 });
             });
         });
+    });
+}
+
+
+function addRouteToMapScenario(route, strokeColor, routeIndex) {
+    var routeCoordinates = [];
+
+    for (var legIndex = 0; legIndex < route.legs.length; legIndex++) {
+        var leg = route.legs[legIndex];
+
+        //Convert the route point data into a format that the map control understands.
+        var legCoordinates = leg.points.map(function (point) {
+            return [point.longitude, point.latitude];
+        });
+
+        //Combine the route point data for each route leg together to form a single path.
+        routeCoordinates = routeCoordinates.concat(legCoordinates);
+        //console.log(routeCoordinates);
+    }
+
+    // Store the route coordinates in the corresponding array
+    if (routeIndex === 1) {
+        routeCoordinates1 = routeCoordinates;
+    } else if (routeIndex === 2) {
+        routeCoordinates2 = routeCoordinates;
+    } else if (routeIndex === 3) {
+        routeCoordinates3 = routeCoordinates;
+    }
+
+    console.log('r1: ',routeCoordinates1);
+    console.log('r2: ',routeCoordinates2);
+    console.log('r3: ', routeCoordinates3);
+
+
+    //Create a LineString from the route path points and add it to the line layer.
+    datasource.add(new atlas.data.Feature(new atlas.data.LineString(routeCoordinates), {
+        strokeColor: strokeColor
+    }));
+
+    //Fit the map window to the bounding box defined by the route points.
+    routePoints = routePoints.concat(routeCoordinates);
+    map.setCamera({
+        bounds: atlas.data.BoundingBox.fromPositions(routePoints),
+        padding: 50
     });
 }

@@ -20,7 +20,11 @@
     <!-- Add a reference to the Azure Maps Rest Helper JavaScript file. -->
     <script src="https://samples.azuremaps.com/lib/azure-maps/azure-maps-helper.min.js"></script>
 
-    <script src="calculateDirections.js"></script>
+    <!-- Add a referencee to the Scenario Routes Scripts-->
+    <script src="calculateDirectionsScenario.js"></script>
+
+    <!-- Add a reference to the geospatial analysis scripts Turf -->
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.5.0"></script>
 
     <script>
         var map, datasource, routePoints = [], currentScenario;
@@ -29,6 +33,10 @@
         var geocodeRequestUrl = 'https://{azMapsDomain}/geocode?api-version=2023-06-01&query={query}&view=Auto';
         var carRoutingRequestUrl = 'https://{azMapsDomain}/route/directions/json?api-version=1.0&query={query}&routeRepresentation=polyline&travelMode=car&view=Auto';
         var truckRoutingRequestUrl = 'https://{azMapsDomain}/route/directions/json?api-version=1.0&query={query}&routeRepresentation=polyline&vehicleLength={vehicleLength}&vehicleHeight={vehicleHeight}&vehicleWidth={vehicleWidth}&vehicleWeight={vehicleWeight}&travelMode=truck&view=Auto';
+        //HC: Route COordinates
+        //var routeCoordinates1 = [];
+        //var routeCoordinates2 = [];
+        //var routeCoordinates3 = [];
 
         var scenarios = [
             //{ from: '47.632241,-122.299189', to: '47.634676,-122.300302', height: '5', width: '3', length: '', weight: '', load: [], description: 'Low bridge', streetsideLink: 'https://binged.it/2oT6d4V' },

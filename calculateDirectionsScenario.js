@@ -195,28 +195,28 @@ function processRoutesAndCalculateIntersections(results) {
         // array to store coordinates of overlapping segments
         var overlappingSegmentsCoordinates = [];
 
-        // Loop through each segment of route1
-        route1Segments.forEach(function (segment1) {
-            // Loop through each segment of route2
-            route2Segments.forEach(function (segment2) {
-                // Loop through each segment of route3
-                route3Segments.forEach(function (segment3) {
-                    var intersection = turf.lineIntersect(segment1, segment2, segment3);
-                    if (intersection.features.length > 0) {
-                        // add intersecting segments to array
-                        intersection.features.forEach(function (feature) {
-                            overlappingSegmentsCoordinates.push(feature.geometry.coordinates);
-                        });
-                    }
-                });
+        // Loop through each segment of route2
+        route2Segments.forEach(function (segment2) {
+            // Loop through each segment of route3
+            route3Segments.forEach(function (segment3) {
+                var intersection = turf.lineIntersect(segment2, segment3);
+                if (intersection.features.length > 0) {
+                    // add intersecting segments to array
+                    intersection.features.forEach(function (feature) {
+                        overlappingSegmentsCoordinates.push(feature.geometry.coordinates);
+                    });
+                }
             });
         });
+
         console.log(overlappingSegmentsCoordinates);
         // Add the overlapping segments to the map
         if (overlappingSegmentsCoordinates.length > 0) {
-            datasource.add(new atlas.data.LineString(overlappingSegmentsCoordinates), {
+            //datasource.add(new atlas.data.feature(new atlas.data.linestring(routecoordinates), {
+
+            datasource.add(new atlas.data.Feature(new atlas.data.LineString(overlappingSegmentsCoordinates), {
                 strokeColor: 'red'
-            });
+            }));
         }
     });
 }

@@ -90,27 +90,30 @@ function calculateDirectionsScenario() {
                         truckRequestUrl2 = truckRequestUrl2.replace('{vehicleWeight}', '');
                         truckRequestUrl3 = truckRequestUrl3.replace('{vehicleWeight}', '');
                     }
+                    // Initiates three asynchronous requests in parallel 
+                    Promise.all([
+                        processRequest(truckRequestUrl1),
+                        processRequest(truckRequestUrl2),
+                        processRequest(truckRequestUrl3)
+                    // waits until all requests are resolved before executing call back function
+                    ]).then(function(results) {
+                        var r1 = results[0];
+                        var r2 = results[1];
+                        var r3 = results[2];
 
-                    processRequest(truckRequestUrl1).then(r => {
-                        addRouteToMapScenario(r.routes[0], 'green',1);
-                        console.log('route 1: ',r.routes[0]);
-                        document.getElementById('output').innerHTML += 'Truck Distance 1: ' + Math.round(r.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
+                        addRouteToMapScenario(r1.routes[0], 'green', 1);
+                        document.getElementById('output').innerHTML += 'Truck Distance 1: ' + Math.round(r1.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
+
+                        addRouteToMapScenario(r2.routes[0], 'green', 2);
+                        document.getElementById('output').innerHTML += 'Truck Distance 2: ' + Math.round(r2.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
+
+                        addRouteToMapScenario(r3.routes[0], 'green', 3);
+                        document.getElementById('output').innerHTML += 'Truck Distance 3: ' + Math.round(r3.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
+
+                        console.log('r1: ', routeCoordinates1);
+                        console.log('r2: ', routeCoordinates2);
+                        console.log('r3: ', routeCoordinates3);
                     });
-                    //console.log()
-
-                    processRequest(truckRequestUrl2).then(r => {
-                        addRouteToMapScenario(r.routes[0], 'green',2);
-                        document.getElementById('output').innerHTML += 'Truck Distance 2: ' + Math.round(r.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
-                    });
-
-                    processRequest(truckRequestUrl3).then(r => {
-                        addRouteToMapScenario(r.routes[0], 'green',3);
-                        document.getElementById('output').innerHTML += 'Truck Distance 3: ' + Math.round(r.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
-                    });
-
-                    //console.log('r1: ', routecoordinates1);
-                    //console.log('r2: ', routecoordinates2);
-                    //console.log('r3: ', routecoordinates3);
 
                 });
             });
@@ -125,14 +128,13 @@ function addRouteToMapScenario(route, strokeColor, routeIndex) {
     for (var legIndex = 0; legIndex < route.legs.length; legIndex++) {
         var leg = route.legs[legIndex];
 
-        //Convert the route point data into a format that the map control understands.
+        // Convert the route point data into a format that the map control understands.
         var legCoordinates = leg.points.map(function (point) {
             return [point.longitude, point.latitude];
         });
 
-        //Combine the route point data for each route leg together to form a single path.
+        // Combine the route point data for each route leg together to form a single path.
         routeCoordinates = routeCoordinates.concat(legCoordinates);
-        //console.log(routeCoordinates);
     }
 
     // Store the route coordinates in the corresponding array
@@ -144,20 +146,31 @@ function addRouteToMapScenario(route, strokeColor, routeIndex) {
         routeCoordinates3 = routeCoordinates;
     }
 
-    console.log('r1: ',routeCoordinates1);
-    console.log('r2: ',routeCoordinates2);
-    console.log('r3: ', routeCoordinates3);
+    console.log('route1',routeCoordinates1);
 
-
-    //Create a LineString from the route path points and add it to the line layer.
+    // Create a LineString from the route path points and add it to the line layer.
     datasource.add(new atlas.data.Feature(new atlas.data.LineString(routeCoordinates), {
         strokeColor: strokeColor
     }));
 
-    //Fit the map window to the bounding box defined by the route points.
+    // Fit the map window to the bounding box defined by the route points.
     routePoints = routePoints.concat(routeCoordinates);
     map.setCamera({
         bounds: atlas.data.BoundingBox.fromPositions(routePoints),
         padding: 50
     });
+}
+
+
+// Function to segment a LineString
+function segmentLineString(lineString) {
+    var segments = [];
+    var coords = lineString.geometry.coordinates;
+
+    for (var i = 0; i < coords.length - 1; i++) {
+        var segment = turf.lineString([coords[i], coords[i + 1]]);
+        segments.push(segment);
+    }
+
+    return segments;
 }

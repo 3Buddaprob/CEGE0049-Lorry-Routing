@@ -1,23 +1,23 @@
-// Description: This file contains the code to calculate directions between multiple locations using the Azure Maps Routing service.
+﻿// Description: This file contains the code to calculate directions between multiple locations using the Azure Maps Routing service.
 // The origins and destinations are hard coded with applications for Stage 1: Site set up and demolition only.
 
 var routeCoordinates1 = [];
 var routeCoordinates2 = [];
 var routeCoordinates3 = [];
 function calculateDirectionsScenario() {
-    routePoints = []; //Clear the route points.
-    document.getElementById('output').innerHTML = ''; //Clear the output div.
-    datasource.clear(); //Clear any existing routes.
+     routePoints = []; //Clear the route points.
+     document.getElementById('output').innerHTML = ''; //Clear the output div.
+     datasource.clear(); //Clear any existing routes.
 
     var from1 = 'NW1 8NS'; // Example from1 location
     var from2 = 'E3 4BH'; // Example from2 location
     var from3 = 'E16 2EZ'; // Example from3 location
     var to = '18 Lodge Rd, London NW8 7JT'; // Example to location
 
-    geocodeQuery(from1, function (fromCoord1) {
-        geocodeQuery(from2, function (fromCoord2) {
-            geocodeQuery(from3, function (fromCoord3) {
-                geocodeQuery(to, function (toCoord) {
+    geocodeQuery(from1, function(fromCoord1) {
+        geocodeQuery(from2, function(fromCoord2) {
+            geocodeQuery(from3, function(fromCoord3) {
+                geocodeQuery(to, function(toCoord) {
 
                     //Create pins for the start and end of the route.
                     var startPoint1 = new atlas.data.Point(fromCoord1);
@@ -95,8 +95,58 @@ function calculateDirectionsScenario() {
                         processRequest(truckRequestUrl1),
                         processRequest(truckRequestUrl2),
                         processRequest(truckRequestUrl3)
-                        // waits until all requests are resolved before executing call back function
-                    ]).then(processRoutesAndCalculateIntersections);
+                    // waits until all requests are resolved before executing call back function
+                    ]).then(function(results) {
+                        var r1 = results[0];
+                        var r2 = results[1];
+                        var r3 = results[2];
+
+                        addRouteToMapScenario(r1.routes[0], 'green', 1);
+                        document.getElementById('output').innerHTML += 'Truck Distance 1: ' + Math.round(r1.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
+
+                        addRouteToMapScenario(r2.routes[0], 'green', 2);
+                        document.getElementById('output').innerHTML += 'Truck Distance 2: ' + Math.round(r2.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
+
+                        addRouteToMapScenario(r3.routes[0], 'green', 3);
+                        document.getElementById('output').innerHTML += 'Truck Distance 3: ' + Math.round(r3.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
+
+                        console.log('r1: ', routeCoordinates1);
+                        console.log('r2: ', routeCoordinates2);
+                        console.log('r3: ', routeCoordinates3);
+
+                        var route1LineString = turf.lineString(routeCoordinates1);
+                        var route2LineString = turf.lineString(routeCoordinates2);
+                        var route3LineString = turf.lineString(routeCoordinates3);
+
+                        //let intersections = turf.lineIntersect(route1LineString, route2LineString, route3LineString);
+                        //console.log(intersections);
+
+                        var route1Segments = segmentLineString(route1LineString);
+                        var route2Segments = segmentLineString(route2LineString);
+                        var route3Segments = segmentLineString(route3LineString);
+
+                        // array to store coordinates of overlapping segments
+                        var overlappingSegmentsCoordinates = [];
+                        route1Segments.forEach(function (segment1) {
+                            route2Segments.forEach(function (segment2) {
+                                route3Segments.forEach(function (segment3) {
+                                    var intersection = turf.lineIntersect(segment1, segment2, segment3);
+                                    if (intersection.features.length > 0) {
+                                        // add intersecting segments to array
+                                        intersection.features.forEach(function (feature) {
+                                            overlappingSegmentsCoordinates.push(feature.geometry.coordinates);
+                                        });
+                                        console.log('overlap:', overlappingSegmentsCoordinates);
+                                        datasource.add(new atlas.data.LineString(overlappingSegmentsCoordinates), {
+                                            strokeColor: 'red'
+                                        });
+                                    }
+                                });
+
+                            });
+                        });
+                    });
+
                 });
             });
         });
@@ -128,7 +178,7 @@ function addRouteToMapScenario(route, strokeColor, routeIndex) {
         routeCoordinates3 = routeCoordinates;
     }
 
-    console.log('route1', routeCoordinates1);
+    console.log('route1',routeCoordinates1);
 
     // Create a LineString from the route path points and add it to the line layer.
     datasource.add(new atlas.data.Feature(new atlas.data.LineString(routeCoordinates), {
@@ -155,68 +205,4 @@ function segmentLineString(lineString) {
     }
 
     return segments;
-}
-
-function processRouteAndAddToMap(routeResponse, strokeColor, routeIndex) {
-    return new Promise(resolve => {
-        addRouteToMapScenario(routeResponse.routes[0], strokeColor, routeIndex);
-        resolve(); // Resolve the promise once the route is processed and added to the map
-    });
-}
-
-function processRoutesAndCalculateIntersections(results) {
-    var r1 = results[0];
-    var r2 = results[1];
-    var r3 = results[2];
-
-    var addRoutePromises = [
-        addRouteToMapScenario(r1.routes[0], 'green', 1),
-        addRouteToMapScenario(r2.routes[0], 'green', 2),
-        addRouteToMapScenario(r3.routes[0], 'green', 3)
-    ];
-
-    Promise.all(addRoutePromises).then(function() {
-        document.getElementById('output').innerHTML += 'Truck Distance 1: ' + Math.round(r1.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
-        document.getElementById('output').innerHTML += 'Truck Distance 2: ' + Math.round(r2.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
-        document.getElementById('output').innerHTML += 'Truck Distance 3: ' + Math.round(r3.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
-
-        console.log('r1: ', routeCoordinates1);
-        console.log('r2: ', routeCoordinates2);
-        console.log('r3: ', routeCoordinates3);
-
-        var route1LineString = turf.lineString(routeCoordinates1);
-        var route2LineString = turf.lineString(routeCoordinates2);
-        var route3LineString = turf.lineString(routeCoordinates3);
-
-        var route1Segments = segmentLineString(route1LineString);
-        var route2Segments = segmentLineString(route2LineString);
-        var route3Segments = segmentLineString(route3LineString);
-
-        // array to store coordinates of overlapping segments
-        var overlappingSegmentsCoordinates = [];
-
-        // Loop through each segment of route1
-        route1Segments.forEach(function (segment1) {
-            // Loop through each segment of route2
-            route2Segments.forEach(function (segment2) {
-                // Loop through each segment of route3
-                route3Segments.forEach(function (segment3) {
-                    var intersection = turf.lineIntersect(segment1, segment2, segment3);
-                    if (intersection.features.length > 0) {
-                        // add intersecting segments to array
-                        intersection.features.forEach(function (feature) {
-                            overlappingSegmentsCoordinates.push(feature.geometry.coordinates);
-                        });
-                    }
-                });
-            });
-        });
-        console.log(overlappingSegmentsCoordinates);
-        // Add the overlapping segments to the map
-        if (overlappingSegmentsCoordinates.length > 0) {
-            datasource.add(new atlas.data.LineString(overlappingSegmentsCoordinates), {
-                strokeColor: 'red'
-            });
-        }
-    });
 }

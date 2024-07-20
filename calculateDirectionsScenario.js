@@ -220,3 +220,38 @@ function processRoutesAndCalculateIntersections(results) {
         }
     });
 }
+
+                document.addEventListener('DOMContentLoaded', function() {
+    // Mapping of months to their respective totals
+    var monthTotals = {
+        'Apr-25': 550,
+        'May-25': 550,
+        'Jun-25': 550,
+        'Jul-25': 880,
+        'Aug-25': 880,
+        'Sep-25': 880,
+        'Oct-25': 880,
+        'Nov-25': 700
+    };
+
+    // Function to update the dailyFlow div
+    function updateDailyFlow() {
+        var selectedMonth = document.getElementById('programmeMonth').value;
+        var total = monthTotals[selectedMonth];
+        document.getElementById('monthlyFlow').innerHTML = total;
+        document.getElementById('dailyFlow').innerHTML = Math.round(total / 30);
+    }
+
+    //function to handle month selection chagne
+    function onMonthSelectionChange() {
+        updateDailyFlow();
+        calculateDirectionsScenario();
+    }
+
+    // Add event listener to the programmeMonth select element
+    document.getElementById('programmeMonth').addEventListener('change', onMonthSelectionChange);
+
+    // Initial update in case the page is loaded with a default selection
+    updateDailyFlow();
+    calculateDirectionsScenario();
+});

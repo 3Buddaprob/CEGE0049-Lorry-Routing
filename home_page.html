@@ -113,12 +113,16 @@
                     filter: ['any', ['==', ['geometry-type'], 'Point'], ['==', ['geometry-type'], 'MultiPoint']] //Only render Point or MultiPoints in this layer.
                 }));
 
-                //Load scenarios
-                var scenarioHtml = [];
+                //HC: Load scenarios visual design updates
+                var scenarioHtml = ['<table style="width:50%; margin-left:auto; margin-right:auto;">'];
 
                 for (var i = 0; i < scenarios.length; i++) {
-                    scenarioHtml.push('<input type="button" value="', scenarios[i].description, '" onclick="loadScenario(', i, ')" /> ');
+                    // Ensure each button is in its own row and cell
+                    scenarioHtml.push('<tr><td style="text-align:center;"><input type="button" style="width:100%;" value="', scenarios[i].description, '" onclick="loadScenario(', i, ')" /></td></tr>');
                 }
+
+                scenarioHtml.push('</table>');
+
 
                 document.getElementById('scenarios').innerHTML = scenarioHtml.join('');
             });
@@ -330,41 +334,41 @@
             <span style="color: #e50000">(red)</span>.-->
         </fieldset>
 
-        <table>
-            <tr><td>From:</td><td><input type="text" id="fromTbx" title="From" value="NW1 8NS" /></td></tr>
-            <tr><td>To:</td><td><input type="text" id="toTbx" title="To" value="18 Lodge Rd, London NW8 7JT" /></td></tr>
+        <table style="border: 1px solid black;">
+            <tr><td style="border: 1px solid black;">From:</td><td style="border: 1px solid black;"><input type="text" id="fromTbx" title="From" value="NW1 8NS" /></td></tr>
+            <tr><td style="border: 1px solid black;">To:</td><td style="border: 1px solid black;"><input type="text" id="toTbx" title="To" value="18 Lodge Rd, London NW8 7JT" /></td></tr>
 
             <tr>
-                <td colspan="2">
+                <td colspan="2" style="border: 1px solid black;">
                     <table id="truckOptions">
-                        <tr><td colspan="2"><b>Truck Options</b></td></tr>
+                        <tr><td colspan="2" style="border: 1px solid black;"><b>Truck Options</b></td></tr>
                         <tr>
-                            <td>Vehicle Width (meters):</td>
-                            <td>
+                            <td style="border: 1px solid black;">Vehicle Width (meters):</td>
+                            <td style="border: 1px solid black;">
                                 <input type="number" id="vehicleWidth" title="Vehicle Width (meters)" />
                             </td>
                         </tr>
                         <tr>
-                            <td>Vehicle Height (meters):</td>
-                            <td>
+                            <td style="border: 1px solid black;">Vehicle Height (meters):</td>
+                            <td style="border: 1px solid black;">
                                 <input type="number" id="vehicleHeight" title="Vehicle Height (meters)" />
                             </td>
                         </tr>
                         <tr>
-                            <td>Vehicle Length (meters):</td>
-                            <td>
+                            <td style="border: 1px solid black;">Vehicle Length (meters):</td>
+                            <td style="border: 1px solid black;">
                                 <input type="number" id="vehicleLength" title="Vehicle Length (meters)" />
                             </td>
                         </tr>
                         <tr>
-                            <td>Vehicle Weight (Tonne):</td>
-                            <td>
+                            <td style="border: 1px solid black;">Vehicle Weight (Tonne):</td>
+                            <td style="border: 1px solid black;">
                                 <input type="number" id="vehicleWeight" title="Vehicle Weight (kg)" />
                             </td>
                         </tr>
                         <tr>
-                            <td>Vehicle Load Type:</td>
-                            <td>
+                            <td style="border: 1px solid black;">Vehicle Load Type:</td>
+                            <td style="border: 1px solid black;">
                                 <select id="vehicleLoadType" title="Vehicle Load Type">
                                     <option value="" />
                                     <option value="USHazmatClass1" />Explosives
@@ -385,30 +389,51 @@
                     </table>
                 </td>
             </tr>
-            <tr><td colspan="2"><b style="font-size:20px;">Scenarios:</b style="font-size:></td></tr>
-            <tr><td colspan="2"><div id="scenarios"></div></td></tr>
-            <!-- HC: date options -->
             <tr>
-                <td>Programme Month:</td>
-                <td>
-                    <select id="programmeMonth" title="Programme Month">
-                        <option value="Apr-25">Apr-25</option>
-                        <option value="May-25">May-25</option>
-                        <option value="Jun-25">Jun-25</option>
-                        <option value="Jul-25">Jul-25</option>
-                        <option value="Aug-25">Aug-25</option>
-                        <option value="Sep-25">Sep-25</option>
-                        <option value="Oct-25">Oct-25</option>
-                        <option value="Nov-25">Nov-25</option>
-                    </select>
+                <td colspan="2" style="border: 1px solid black; text-align: center; vertical-align: middle;">
+                    <input type="button" value="Calculate Directions" title="Calculate Directions" onclick="calculateDirections()" style="font-size: 20px; font-weight: bold;" />
                 </td>
             </tr>
-            <tr><td colspan="2"><b>Average Daily Flow:</b></td></tr>
-            <tr><td colspan="2"><div id="dailyFlow"></div></td></tr>
-            <tr><td colspan="2"><b>Average Monthly Flow:</b></td></tr>
-            <tr><td colspan="2"><div id="monthlyFlow"></div></td></tr>
-            <tr><td></td><td><br /><input type="button" value="Calculate Directions" title="Calculate Directions" onclick="calculateDirections()" /></td></tr>
-            <tr><td colspan="2"><br /><div id="output"></div></td></tr>
+            <tr><td colspan="2" style="border: 1px solid black;"><b style="font-size:20px;">Scenarios:</b></td></tr>
+            <tr>
+                <td colspan="2" style="border: 1px solid black;">
+                    <table style="border: 1px solid black; width:100%;">
+                        <tr>
+                            <td style="width: 50%; border: 1px solid black;text-align:center;">Scenarios</td>
+                            <td style="width: 50%; border: 1px solid black;text-align:center;">Programme Months</td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" style="border: 1px solid black;">
+                                <div id="scenarios"></div>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <select id="programmeMonth" title="Programme Month" style="width: 80%; display: block; margin: auto;">
+                                    <option value="Apr-25">Apr-25</option>
+                                    <option value="May-25">May-25</option>
+                                    <option value="Jun-25">Jun-25</option>
+                                    <option value="Jul-25">Jul-25</option>
+                                    <option value="Aug-25">Aug-25</option>
+                                    <option value="Sep-25">Sep-25</option>
+                                    <option value="Oct-25">Oct-25</option>
+                                    <option value="Nov-25">Nov-25</option>
+                                </select>
+                            </td>
+
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black;"><b>Average Daily Flow:</b></td>
+                <td style="border: 1px solid black;"><div id="dailyFlow"></div></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black;"><b>Average Monthly Flow:</b></td>
+                <td style="border: 1px solid black;"><div id="monthlyFlow"></div></td>
+            </tr>
+
+
+            <tr><td colspan="2" style="border: 1px solid black;"><br /><div id="output"></div></td></tr>
         </table>
     </div>
 

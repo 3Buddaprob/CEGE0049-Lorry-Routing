@@ -39,21 +39,18 @@
         var routeCoordinates3 = [];
 
         var scenarios = [
-            //{ from: '47.632241,-122.299189', to: '47.634676,-122.300302', height: '5', width: '3', length: '', weight: '', load: [], description: 'Low bridge', streetsideLink: 'https://binged.it/2oT6d4V' },
-            //{ from: '47.586514,-122.245874', to: '47.584868,-122.243094', height: '', width: '', length: '30', weight: '', load: [], description: 'Tight turn', streetsideLink: 'https://binged.it/2v2gal8' },
-            //{ from: '40.429993,-79.998690', to: '40.414211,-80.009550', height: '', width: '', length: '', weight: '', load: ['USHazmatClass3'], description: 'Flammable load', streetsideLink: 'https://binged.it/2hd6P3s' },
             //HC: S1 Scenario
             { from1: 'NW1 8NS', from2: 'E3 4BH', from3: 'E16 2EZ', to: '18 Lodge Rd, London NW8 7JT', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 1', streetsideLink: 'https://binged.it/2hd6P3s' },
             //HC: S2 Scenario
-            { from: 'E3 4BH', to: '18 Lodge Rd, London NW8 7JT', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 2', streetsideLink: 'https://binged.it/2hd6P3s' },
+            { from: 'E3 4BH', to: '18 Lodge Rd, London NW8 7JT', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 2'},
             //HC: S3 Scenario
-            { from: 'E16 2EZ', to: '18 Lodge Rd, London NW8 7JT', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 3', streetsideLink: 'https://binged.it/2hd6P3s' },
+            { from: 'E16 2EZ', to: '18 Lodge Rd, London NW8 7JT', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 3'},
             //HC: S4 Scenario
-            { from: 'UB6 0AA', to: '18 Lodge Rd, London NW8 7JT', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 4', streetsideLink: 'https://binged.it/2hd6P3s' },
+            { from: 'UB6 0AA', to: '18 Lodge Rd, London NW8 7JT', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 4'},
             //HC: S5 Scenario
-            { from: 'AL9 7HF', to: '18 Lodge Rd, London NW8 7JT', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 5', streetsideLink: 'https://binged.it/2hd6P3s' },
+            { from: 'AL9 7HF', to: '18 Lodge Rd, London NW8 7JT', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 5'},
             //HC: S6 Scenario
-            { from: 'NW1 8NS', to: '18 Lodge Rd, London NW8 7JT', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 6', streetsideLink: 'https://binged.it/2hd6P3s' },
+            { from: 'NW1 8NS', to: '18 Lodge Rd, London NW8 7JT', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 6'},
 
         ];
 
@@ -113,12 +110,16 @@
                     filter: ['any', ['==', ['geometry-type'], 'Point'], ['==', ['geometry-type'], 'MultiPoint']] //Only render Point or MultiPoints in this layer.
                 }));
 
-                //Load scenarios
-                var scenarioHtml = [];
+                //HC: Load scenarios visual design updates
+                var scenarioHtml = ['<table style="width:50%; margin-left:auto; margin-right:auto;">'];
 
                 for (var i = 0; i < scenarios.length; i++) {
-                    scenarioHtml.push('<input type="button" value="', scenarios[i].description, '" onclick="loadScenario(', i, ')" /> ');
+                    // Ensure each button is in its own row and cell
+                    scenarioHtml.push('<tr><td style="text-align:center;"><input type="button" style="width:100%;" value="', scenarios[i].description, '" onclick="loadScenario(', i, ')" /></td></tr>');
                 }
+
+                scenarioHtml.push('</table>');
+
 
                 document.getElementById('scenarios').innerHTML = scenarioHtml.join('');
             });
@@ -166,12 +167,12 @@
                     console.log(query);
 
                     // car request
-                    var carRequestUrl = carRoutingRequestUrl.replace('{query}', query);
+                    //var carRequestUrl = carRoutingRequestUrl.replace('{query}', query);
 
-                    processRequest(carRequestUrl).then(r => {
-                        addRouteToMap(r.routes[0], 'red');
-                        document.getElementById('output').innerHTML += 'Car Distance: ' + Math.round(r.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
-                    });
+                    //processRequest(carRequestUrl).then(r => {
+                    //    addRouteToMap(r.routes[0], 'red');
+                    //    document.getElementById('output').innerHTML += 'Car Distance: ' + Math.round(r.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
+                    //});
 
                     //truck request
                     var truckRequestUrl = truckRoutingRequestUrl.replace('{query}', query);
@@ -296,7 +297,6 @@
 
             calculateDirectionsScenario();
 
-            document.getElementById('output').innerHTML = '<a href="' + scenario.streetsideLink + '" target="_blank">Streetside</a><br/>';
         }
     </script>
     <style>
@@ -324,47 +324,47 @@
 <body onload="getMap()"> 
     <div class="sidePanel">
         <fieldset style="width:300px;margin-bottom:10px;">
-            <legend>Lorry Route</legend>
-            This sample creates a lorry route between the destinations using Azure Map API
-            <!--<span style="color:green">(green)</span> to the route a car can take
-            <span style="color: #e50000">(red)</span>.-->
+            <legend>Lorry Routing Tool Demo</legend>
+            This Demo creates a lorry route between the destinations using azure map API. 
+            <span style="color:green">Green</span> serves single pair of orgin and destinations. 
+            <span style="color: #e50000">Red</span> indicated overlapped route segments.
         </fieldset>
 
-        <table>
-            <tr><td>From:</td><td><input type="text" id="fromTbx" title="From" value="NW1 8NS" /></td></tr>
-            <tr><td>To:</td><td><input type="text" id="toTbx" title="To" value="18 Lodge Rd, London NW8 7JT" /></td></tr>
+        <table style="border: 1px solid black;">
+            <tr><td style="border: 1px solid black;">From:</td><td style="border: 1px solid black;"><input type="text" id="fromTbx" title="From" value="NW1 8NS" /></td></tr>
+            <tr><td style="border: 1px solid black;">To:</td><td style="border: 1px solid black;"><input type="text" id="toTbx" title="To" value="18 Lodge Rd, London NW8 7JT" /></td></tr>
 
             <tr>
-                <td colspan="2">
+                <td colspan="2" style="border: 1px solid black;">
                     <table id="truckOptions">
-                        <tr><td colspan="2"><b>Truck Options</b></td></tr>
+                        <tr><td colspan="2" style="border: 1px solid black;"><b>Truck Options</b></td></tr>
                         <tr>
-                            <td>Vehicle Width (meters):</td>
-                            <td>
+                            <td style="border: 1px solid black;">Vehicle Width (meters):</td>
+                            <td style="border: 1px solid black;">
                                 <input type="number" id="vehicleWidth" title="Vehicle Width (meters)" />
                             </td>
                         </tr>
                         <tr>
-                            <td>Vehicle Height (meters):</td>
-                            <td>
+                            <td style="border: 1px solid black;">Vehicle Height (meters):</td>
+                            <td style="border: 1px solid black;">
                                 <input type="number" id="vehicleHeight" title="Vehicle Height (meters)" />
                             </td>
                         </tr>
                         <tr>
-                            <td>Vehicle Length (meters):</td>
-                            <td>
+                            <td style="border: 1px solid black;">Vehicle Length (meters):</td>
+                            <td style="border: 1px solid black;">
                                 <input type="number" id="vehicleLength" title="Vehicle Length (meters)" />
                             </td>
                         </tr>
                         <tr>
-                            <td>Vehicle Weight (Tonne):</td>
-                            <td>
+                            <td style="border: 1px solid black;">Vehicle Weight (Tonne):</td>
+                            <td style="border: 1px solid black;">
                                 <input type="number" id="vehicleWeight" title="Vehicle Weight (kg)" />
                             </td>
                         </tr>
                         <tr>
-                            <td>Vehicle Load Type:</td>
-                            <td>
+                            <td style="border: 1px solid black;">Vehicle Load Type:</td>
+                            <td style="border: 1px solid black;">
                                 <select id="vehicleLoadType" title="Vehicle Load Type">
                                     <option value="" />
                                     <option value="USHazmatClass1" />Explosives
@@ -385,30 +385,51 @@
                     </table>
                 </td>
             </tr>
-            <tr><td colspan="2"><b style="font-size:20px;">Scenarios:</b style="font-size:></td></tr>
-            <tr><td colspan="2"><div id="scenarios"></div></td></tr>
-            <!-- HC: date options -->
             <tr>
-                <td>Programme Month:</td>
-                <td>
-                    <select id="programmeMonth" title="Programme Month">
-                        <option value="Apr-25">Apr-25</option>
-                        <option value="May-25">May-25</option>
-                        <option value="Jun-25">Jun-25</option>
-                        <option value="Jul-25">Jul-25</option>
-                        <option value="Aug-25">Aug-25</option>
-                        <option value="Sep-25">Sep-25</option>
-                        <option value="Oct-25">Oct-25</option>
-                        <option value="Nov-25">Nov-25</option>
-                    </select>
+                <td colspan="2" style="border: 1px solid black; text-align: center; vertical-align: middle;">
+                    <input type="button" value="Calculate Directions" title="Calculate Directions" onclick="calculateDirections()" style="font-size: 20px; font-weight: bold;" />
                 </td>
             </tr>
-            <tr><td colspan="2"><b>Average Daily Flow:</b></td></tr>
-            <tr><td colspan="2"><div id="dailyFlow"></div></td></tr>
-            <tr><td colspan="2"><b>Average Monthly Flow:</b></td></tr>
-            <tr><td colspan="2"><div id="monthlyFlow"></div></td></tr>
-            <tr><td></td><td><br /><input type="button" value="Calculate Directions" title="Calculate Directions" onclick="calculateDirections()" /></td></tr>
-            <tr><td colspan="2"><br /><div id="output"></div></td></tr>
+            <tr><td colspan="2" style="border: 1px solid black;"><b style="font-size:20px;">Scenarios:</b></td></tr>
+            <tr>
+                <td colspan="2" style="border: 1px solid black;">
+                    <table style="border: 1px solid black; width:100%;">
+                        <tr>
+                            <td style="width: 50%; border: 1px solid black;text-align:center;">Scenarios</td>
+                            <td style="width: 50%; border: 1px solid black;text-align:center;">Programme Months</td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" style="border: 1px solid black;">
+                                <div id="scenarios"></div>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <select id="programmeMonth" title="Programme Month" style="width: 80%; display: block; margin: auto;">
+                                    <option value="Apr-25">Apr-25</option>
+                                    <option value="May-25">May-25</option>
+                                    <option value="Jun-25">Jun-25</option>
+                                    <option value="Jul-25">Jul-25</option>
+                                    <option value="Aug-25">Aug-25</option>
+                                    <option value="Sep-25">Sep-25</option>
+                                    <option value="Oct-25">Oct-25</option>
+                                    <option value="Nov-25">Nov-25</option>
+                                </select>
+                            </td>
+
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black;"><b>Average Daily Flow:</b></td>
+                <td style="border: 1px solid black;"><div id="dailyFlow"></div></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black;"><b>Average Monthly Flow:</b></td>
+                <td style="border: 1px solid black;"><div id="monthlyFlow"></div></td>
+            </tr>
+
+
+            <tr><td colspan="2" style="border: 1px solid black;"><br /><div id="output"></div></td></tr>
         </table>
     </div>
 

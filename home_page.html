@@ -54,16 +54,7 @@
 
         ];
 
-        // Function to retrieve an Azure Maps access token.
-        function getToken(resolve, reject, map) {
-            fetch(tokenServiceUrl).then(response => {
-                if (response.ok) {
-                    return response.text();
-                }
-                throw new Error('Failed to retrieve Azure Maps token.');
-            }).then(token => resolve(token)).catch(error => reject(error));
-        }
-
+        // Functure to initial map
         function getMap() {
             //Initialize a map instance.
             map = new atlas.Map('myMap', {

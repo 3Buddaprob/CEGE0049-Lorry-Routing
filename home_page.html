@@ -54,12 +54,6 @@
 
         ];
 
-        // Your Azure Maps client id for accessing your Azure Maps account.
-        var azureMapsClientId = 'e6b6ab59-eb5d-4d25-aa57-581135b927f0';
-
-        // URL to your authentication service that retrieves an Microsoft Entra ID Token.
-        var tokenServiceUrl = 'https://samples.azuremaps.com/api/GetAzureMapsToken';
-
         // Function to retrieve an Azure Maps access token.
         function getToken(resolve, reject, map) {
             fetch(tokenServiceUrl).then(response => {
@@ -77,7 +71,7 @@
 
                 // Add authentication details for connecting to Azure Maps.
                 authOptions: {
-                    // Alternatively, use an Azure Maps key.
+                    // Use an Azure Maps key.
                     // Get an Azure Maps key at https://azure.com/maps.
                     authType: 'subscriptionKey',
                     subscriptionKey: 'C0adSsoOzlBHoC89T1dT8IvtTxehreCrZIWSeiis3NjnX6Sx3xHXJQQJ99AGAC5RqLJQdnNOAAAgAZMPsVc3'
@@ -165,14 +159,6 @@
 
                     var query = fromCoord.join(',') + ':' + toCoord.join(',');
                     console.log(query);
-
-                    // car request
-                    //var carRequestUrl = carRoutingRequestUrl.replace('{query}', query);
-
-                    //processRequest(carRequestUrl).then(r => {
-                    //    addRouteToMap(r.routes[0], 'red');
-                    //    document.getElementById('output').innerHTML += 'Car Distance: ' + Math.round(r.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
-                    //});
 
                     //truck request
                     var truckRequestUrl = truckRoutingRequestUrl.replace('{query}', query);
@@ -275,9 +261,11 @@
             return requestUrl;
         }
 
+        // Load the selected scenario
         function loadScenario(scenarioNum) {
             var scenario = scenarios[scenarioNum];
 
+            // Set the values of the input fields based on the selected scenario
             document.getElementById('fromTbx').value = scenario.from;
             document.getElementById('toTbx').value = scenario.to;
             document.getElementById('vehicleWidth').value = scenario.width;
@@ -287,6 +275,7 @@
 
             var vehicleLoadTypeSelect = document.getElementById('vehicleLoadType');
 
+            // Set the selected options in the vehicleLoadType select element based on the selected scenario
             for (var i = 0; i < vehicleLoadTypeSelect.length; i++) {
                 if (scenario.load.indexOf(vehicleLoadTypeSelect.options[i].value) > -1) {
                     vehicleLoadTypeSelect.options[i].selected = 'selected';
@@ -296,9 +285,9 @@
             }
 
             calculateDirectionsScenario();
-
         }
     </script>
+
     <style>
         #myMap {
             position: relative;

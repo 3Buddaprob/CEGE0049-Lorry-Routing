@@ -24,26 +24,25 @@ Azure Maps Subscription Key: Replace the placeholder in the `subscriptionKey` fi
 ```
   authType: 'subscriptionKey',
   subscriptionKey: 'YOUR_AZURE_MAPS_SUBSCRIPTION_KEY'
-
 ```
-### Running the demo
-1.	Open ‘home.html’ in web browser. 
-2.	Set Origin and Destination:
- - Enter the starting location in the "From" field (default: NW1 8NS).
+### Running the Demo
+1.	**Open ‘home.html’ in web browser.**
+2.	**Set Origin and Destination:**
+- Enter the starting location in the "From" field (default: NW1 8NS).
 - Enter the destination location in the "To" field (default: 18 Lodge Rd, London NW8 7JT).
-3.	Configure Truck Options:
+3.	**Configure Truck Options:**
 - Specify the truck dimensions (width, height, length, and weight) in the respective fields.
 - Select the load type from the dropdown menu.
-4.	Calculate Directions:
+4.	**Calculate Directions:**
 - Click the "Calculate Directions" button to generate the route. The map will display the calculated route, with green indicating the main route and red indicating overlapping segments.
-5.	Select Scenario and Programme Month:
+5.	**Select Scenario and Programme Month:**
 - Choose a scenario and select a programme month to view the corresponding average daily and monthly flow data.
 
 ## Code References
 This demo is adapted from Azure Maps’ official code sample of [Car vs. Truck.](https://github.com/Azure-Samples/AzureMapsCodeSamples/blob/main/Samples/Demos/Car%20vs%20Truck%20Route/Car%20vs%20Truck%20Route.html )
 
 ### External Libraries 
-- This demo leverages several external JavaScript libraries, including 
+This demo leverages several external JavaScript libraries, including 
 1.	  Azure Maps SDK: Provides map rendering and geospatial services.
 2.	Turf.js: Used for geospatial analysis and manipulation
 

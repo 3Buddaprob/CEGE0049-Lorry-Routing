@@ -27,6 +27,7 @@ Azure Maps Subscription Key: Replace the placeholder in the `subscriptionKey` fi
 ```
 ### Running the Demo
 1.	**Open ‘home.html’ in web browser.**
+- Recommended browser: Chrome or Edge.
 2.	**Set Origin and Destination:**
 - Enter the starting location in the "From" field (default: NW1 8NS).
 - Enter the destination location in the "To" field (default: 18 Lodge Rd, London NW8 7JT).

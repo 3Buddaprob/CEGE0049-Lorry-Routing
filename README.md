@@ -3,12 +3,6 @@
 
 A technical guide for a web-based lorry routing tool. This demo generates routes between two destinations using Azure Map API with scenario and flow analysis functionalities. This tool is developed for the purpose of the MSc Geospatial Science Research project CEGE0049 Digitisation of CLP. This tool has the following functionalities.
 
-
-
-
-
-
-
 ## Features
 - **Online Map** – This demo uses Microsoft Azure Map API for map rendering and routing services. 
 - **Setting Scenarios** – This demo includes predefined scenarios that showcase different routing situations: Stages 1 to Stage 6 (construction stages). Data used are based on the CLOC's [completed CLOCS outline CLP example](https://www.clocs.org.uk/resources/clocs_example_template_2018.pdf) and [CLOCs completed CLP tool](https://www.clocs.org.uk/resources/clp_tool_example.xlsm)
@@ -44,3 +38,14 @@ Azure Maps Subscription Key: Replace the placeholder in the `subscriptionKey` fi
 - Click the "Calculate Directions" button to generate the route. The map will display the calculated route, with green indicating the main route and red indicating overlapping segments.
 5.	Select Scenario and Programme Month:
 - Choose a scenario and select a programme month to view the corresponding average daily and monthly flow data.
+
+## Code References
+This demo is adapted from Azure Maps’ official code sample of [Car vs. Truck.](https://github.com/Azure-Samples/AzureMapsCodeSamples/blob/main/Samples/Demos/Car%20vs%20Truck%20Route/Car%20vs%20Truck%20Route.html )
+
+### External Libraries 
+- This demo leverages several external JavaScript libraries, including 
+1.	  Azure Maps SDK: Provides map rendering and geospatial services.
+2.	Turf.js: Used for geospatial analysis and manipulation
+
+## Contact
+For any queries or feedback, please contact the author at [hchiu0298@gmail.com]

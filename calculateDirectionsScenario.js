@@ -156,14 +156,14 @@ function segmentLineString(lineString) {
 
     return segments;
 }
-
+// Function to process a routing request
 function processRouteAndAddToMap(routeResponse, strokeColor, routeIndex) {
     return new Promise(resolve => {
         addRouteToMapScenario(routeResponse.routes[0], strokeColor, routeIndex);
         resolve(); // Resolve the promise once the route is processed and added to the map
     });
 }
-
+// Function to calculate intersections between routes
 function processRoutesAndCalculateIntersections(results) {
     var r1 = results[0];
     var r2 = results[1];
@@ -176,6 +176,7 @@ function processRoutesAndCalculateIntersections(results) {
     ];
 
     Promise.all(addRoutePromises).then(function() {
+        // Display truck distances
         document.getElementById('output').innerHTML += 'Truck Distance 1: ' + Math.round(r1.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
         document.getElementById('output').innerHTML += 'Truck Distance 2: ' + Math.round(r2.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
         document.getElementById('output').innerHTML += 'Truck Distance 3: ' + Math.round(r3.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
@@ -192,7 +193,7 @@ function processRoutesAndCalculateIntersections(results) {
         var route2Segments = segmentLineString(route2LineString);
         var route3Segments = segmentLineString(route3LineString);
 
-        // array to store coordinates of overlapping segments
+        // Array to store coordinates of overlapping segments
         var overlappingSegmentsCoordinates = [];
 
         // Loop through each segment of route2
@@ -201,7 +202,7 @@ function processRoutesAndCalculateIntersections(results) {
             route3Segments.forEach(function (segment3) {
                 var intersection = turf.lineIntersect(segment2, segment3);
                 if (intersection.features.length > 0) {
-                    // add intersecting segments to array
+                    // Add intersecting segments to array
                     intersection.features.forEach(function (feature) {
                         overlappingSegmentsCoordinates.push(feature.geometry.coordinates);
                     });
@@ -212,8 +213,6 @@ function processRoutesAndCalculateIntersections(results) {
         console.log(overlappingSegmentsCoordinates);
         // Add the overlapping segments to the map
         if (overlappingSegmentsCoordinates.length > 0) {
-            //datasource.add(new atlas.data.feature(new atlas.data.linestring(routecoordinates), {
-
             datasource.add(new atlas.data.Feature(new atlas.data.LineString(overlappingSegmentsCoordinates), {
                 strokeColor: 'red'
             }));

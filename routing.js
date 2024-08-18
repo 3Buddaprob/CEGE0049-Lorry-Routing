@@ -40,9 +40,7 @@ var map, datasource, routePoints = [], currentScenario;
                     // Use an Azure Maps key.
                     // Get an Azure Maps key at https://azure.com/maps.
                     authType: 'subscriptionKey',
-                    /*subscriptionKey: 'YOUR_AZURE_MAPS_SUBSCRIPTION_KEY'*/
-					// For a demo key, use the following:
-                    subscriptionKey: 'C0adSsoOzlBHoC89T1dT8IvtTxehreCrZIWSeiis3NjnX6Sx3xHXJQQJ99AGAC5RqLJQdnNOAAAgAZMPsVc3'
+                    subscriptionKey: 'YOUR_AZURE_MAPS_SUBSCRIPTION_KEY'
 }
             });
 

@@ -177,9 +177,9 @@ function processRoutesAndCalculateIntersections(results) {
 
     Promise.all(addRoutePromises).then(function() {
         // Display truck distances
-        document.getElementById('output').innerHTML += 'Truck Distance 1: ' + Math.round(r1.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
-        document.getElementById('output').innerHTML += 'Truck Distance 2: ' + Math.round(r2.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
-        document.getElementById('output').innerHTML += 'Truck Distance 3: ' + Math.round(r3.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
+        document.getElementById('output').innerHTML += 'Lorry Route Distance 1: ' + Math.round(r1.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
+        document.getElementById('output').innerHTML += 'Lorry Route Distance 2: ' + Math.round(r2.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
+        document.getElementById('output').innerHTML += 'Lorry Route Distance 3: ' + Math.round(r3.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
 
         console.log('r1: ', routeCoordinates1);
         console.log('r2: ', routeCoordinates2);

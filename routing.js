@@ -38,7 +38,6 @@ var map, datasource, routePoints = [], currentScenario;
                 // Add authentication details for connecting to Azure Maps.
                 authOptions: {
                     // Use an Azure Maps key.
-                    // Get an Azure Maps key at https://azure.com/maps.
                     authType: 'subscriptionKey',
                     subscriptionKey: 'YOUR_AZURE_MAPS_SUBSCRIPTION_KEY'
 }
@@ -126,18 +125,19 @@ var map, datasource, routePoints = [], currentScenario;
                     var query = fromCoord.join(',') + ':' + toCoord.join(',');
                     console.log(query);
 
-                    //truck request
+                    //truck request url
                     var truckRequestUrl = truckRoutingRequestUrl.replace('{query}', query);
 
+                    //check if there are any loadtype inputs
                     var loadType = getSelectValues('vehicleLoadType');
                     if (loadType && loadType !== '') {
                         truckRequestUrl += '&vehicleLoadType=' + loadType;
                     }
 
+                    //adding dimensions to the truck request url
                     truckRequestUrl = setValueOptions(truckRequestUrl, ['vehicleWidth', 'vehicleHeight', 'vehicleLength']);
-                    console.log(document.getElementById('vehicleWeight').value);
 
-                    //HC: convert vehicle weight to kg by multiplying by 1000
+                    //convert vehicle weight to kg by multiplying by 1000
                     var vehicleWeight = document.getElementById('vehicleWeight').value;
                     if (vehicleWeight && vehicleWeight !== '') {
                         vehicleWeight *= 1000;
@@ -147,8 +147,10 @@ var map, datasource, routePoints = [], currentScenario;
                         truckRequestUrl = truckRequestUrl.replace('{vehicleWeight}', '');
                     }
 
+                    //make the request to the truck routing API and add the route to the map.
                     processRequest(truckRequestUrl).then(r => {
                         addRouteToMap(r.routes[0], 'green');
+                        // indicate route length
                         document.getElementById('output').innerHTML += 'Lorry Route Distance: ' + Math.round(r.routes[0].summary.lengthInMeters / 10) / 100 + ' km<br/>';
                     });
                 });

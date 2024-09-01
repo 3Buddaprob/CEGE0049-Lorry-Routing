@@ -15,17 +15,17 @@ var map, datasource, routePoints = [], currentScenario;
 
         var scenarios = [
             //HC: S1 Scenario
-            { from1: 'NW1 8NS', from2: 'E3 4BH', from3: 'E16 2EZ', to: '18 Lodge Rd, London NW8 7JT', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 1', streetsideLink: 'https://binged.it/2hd6P3s' },
+            { from1: 'NW1 8NS', from2: 'E3 4BH', from3: 'E16 2EZ', to: '51.529402 , -0.16798809', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 1', streetsideLink: 'https://binged.it/2hd6P3s' },
             //HC: S2 Scenario
-            { from: 'E3 4BH', to: '18 Lodge Rd, London NW8 7JT', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 2'},
+            { from: 'E3 4BH', to: '51.529402 , -0.16798809', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 2'},
             //HC: S3 Scenario
-            { from: 'E16 2EZ', to: '18 Lodge Rd, London NW8 7JT', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 3'},
+            { from: 'E16 2EZ', to: '51.529402 , -0.16798809', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 3'},
             //HC: S4 Scenario
-            { from: 'UB6 0AA', to: '18 Lodge Rd, London NW8 7JT', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 4'},
+            { from: 'UB6 0AA', to: '51.529402 , -0.16798809', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 4'},
             //HC: S5 Scenario
-            { from: 'AL9 7HF', to: '18 Lodge Rd, London NW8 7JT', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 5'},
+            { from: 'AL9 7HF', to: '51.529402 , -0.16798809', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 5'},
             //HC: S6 Scenario
-            { from: 'NW1 8NS', to: '18 Lodge Rd, London NW8 7JT', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 6'},
+            { from: 'NW1 8NS', to: '51.529402 , -0.16798809', height: '', width: '', length: '', weight: '', load: [], description: 'Stage 6'},
 
         ];
 
@@ -35,7 +35,7 @@ var map, datasource, routePoints = [], currentScenario;
             map = new atlas.Map('myMap', {
                 view: 'Auto',
 
-                // Add authentication details for connecting to Azure Maps.
+                // Add authentication details for connecting to Azure Maps
                 authOptions: {
                     // Use an Azure Maps key.
                     authType: 'subscriptionKey',

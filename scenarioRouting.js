@@ -12,7 +12,7 @@ function calculateDirectionsScenario() {
     var from1 = 'NW1 8NS'; // Example from1 location
     var from2 = 'E3 4BH'; // Example from2 location
     var from3 = 'E16 2EZ'; // Example from3 location
-    var to = '18 Lodge Rd, London NW8 7JT'; // Example to location
+    var to = '51.529402 , -0.16798809'; // Example to location
 
     geocodeQuery(from1, function (fromCoord1) {
         geocodeQuery(from2, function (fromCoord2) {

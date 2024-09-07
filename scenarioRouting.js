@@ -12,7 +12,7 @@ function calculateDirectionsScenario() {
     var from1 = 'NW1 8NS'; // Example from1 location
     var from2 = 'E3 4BH'; // Example from2 location
     var from3 = 'E16 2EZ'; // Example from3 location
-    var to = '18 Lodge Rd, London NW8 7JT'; // Example to location
+    var to = '51.529402 , -0.16798809'; // Example to location
 
     geocodeQuery(from1, function (fromCoord1) {
         geocodeQuery(from2, function (fromCoord2) {
@@ -92,10 +92,10 @@ function calculateDirectionsScenario() {
                     }
                     // Initiates three asynchronous requests in parallel 
                     Promise.all([
-                        processRequest(truckRequestUrl1),
-                        processRequest(truckRequestUrl2),
-                        processRequest(truckRequestUrl3)
-                        // waits until all requests are resolved before executing call back function
+                        processRequest(truckRequestUrl1),// route request for CCC#1
+                        processRequest(truckRequestUrl2),// route request for CCC#2
+                        processRequest(truckRequestUrl3) // route request for CCC#3
+                        // waits until all requests are resolved before executing call back function and proceed to overlapping analysis exercise
                     ]).then(processRoutesAndCalculateIntersections);
                 });
             });
@@ -185,10 +185,11 @@ function processRoutesAndCalculateIntersections(results) {
         console.log('r2: ', routeCoordinates2);
         console.log('r3: ', routeCoordinates3);
 
+        // Convert the route line strings into LineStrings for intersections calculation
         var route1LineString = turf.lineString(routeCoordinates1);
         var route2LineString = turf.lineString(routeCoordinates2);
         var route3LineString = turf.lineString(routeCoordinates3);
-
+        // Segment the routes into LineStrings for intersection calculation
         var route1Segments = segmentLineString(route1LineString);
         var route2Segments = segmentLineString(route2LineString);
         var route3Segments = segmentLineString(route3LineString);
@@ -196,9 +197,9 @@ function processRoutesAndCalculateIntersections(results) {
         // Array to store coordinates of overlapping segments
         var overlappingSegmentsCoordinates = [];
 
-        // Loop through each segment of route2
+        // Loop through each segment of route#2 to check for intersections
         route2Segments.forEach(function (segment2) {
-            // Loop through each segment of route3
+            // Loop through each segment of route#3 to check for intersections
             route3Segments.forEach(function (segment3) {
                 var intersection = turf.lineIntersect(segment2, segment3);
                 if (intersection.features.length > 0) {
@@ -220,7 +221,8 @@ function processRoutesAndCalculateIntersections(results) {
     });
 }
 
-                document.addEventListener('DOMContentLoaded', function() {
+// Function to update data based on month selection/scenario selection
+document.addEventListener('DOMContentLoaded', function() {
     // Mapping of months to their respective totals
     var monthTotals = {
         'Apr-25': 550,
@@ -235,8 +237,11 @@ function processRoutesAndCalculateIntersections(results) {
 
     // Function to update the dailyFlow div
     function updateDailyFlow() {
+        // Get the selected month from the dropdown
         var selectedMonth = document.getElementById('programmeMonth').value;
+        // Get the total for the selected month from the map of month totals
         var total = monthTotals[selectedMonth];
+        // Update the monthly/ daily flow div with the total for the selected month
         document.getElementById('monthlyFlow').innerHTML = total;
         document.getElementById('dailyFlow').innerHTML = Math.round(total / 30);
     }

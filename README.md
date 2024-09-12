@@ -1,7 +1,7 @@
 
 # Lorry Routing Tool CEGE0049
 
-A technical guide for a web-based lorry routing tool. This demo generates routes between two destinations using Azure Map API with scenario and flow analysis functionalities. This tool is developed for the purpose of the MSc Geospatial Science Research project CEGE0049 Digitisation of CLP. This tool has the following functionalities.
+A technical guide for a web-based lorry routing tool. This demo generates routes between two destinations using Azure Map API with scenario and flow analysis functionalities. This tool is developed for the purpose of the MSc Geospatial Science research project CEGE0049 Digitisation of CLP. This tool has the following functionalities.
 
 ## Features
 - **Online Map** – This demo uses Microsoft Azure Map API for map rendering and routing services. 
